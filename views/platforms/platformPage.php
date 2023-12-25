@@ -11,4 +11,6 @@
     <?php Util::deleteSession('create_platform') ?>
 
     <?= require_once 'createPlatformForm.php';?>
+
+    <?= require_once 'platformTable.php';?>
 </main>

@@ -366,3 +366,9 @@ body {
 .button-dashboard-primary:hover {
     background-color: #157a4e;
 }
+
+.table {
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: #3aaf7b;
+}

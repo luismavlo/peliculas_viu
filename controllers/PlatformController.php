@@ -5,6 +5,9 @@ require_once 'models/Platform.php';
 class PlatformController {
 
     public function index(){
+        $platform = new Platform();
+        $platforms = $platform->findAll();
+
         require_once 'views/platforms/platformPage.php';
     }
 
@@ -25,8 +28,6 @@ class PlatformController {
             return;
         }
 
-        // Puedes agregar más validaciones según tus necesidades
-
         $platform = new Platform();
         $platform->setName($name);
         $platform->setImage($image);
@@ -41,6 +42,10 @@ class PlatformController {
 
         $_SESSION['create_platform'] = "completed";
         header("Location: " . base_url . "Platform/index");
+    }
+
+    public function findAll(){
+
     }
 
 }

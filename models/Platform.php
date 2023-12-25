@@ -51,4 +51,9 @@ class Platform
         }
         return true;
     }
+
+    public function findAll()
+    {
+        return $this->db->query("SELECT * FROM platform");
+    }
 }
