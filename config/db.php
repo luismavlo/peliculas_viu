@@ -111,62 +111,62 @@ class Database {
             $db->query("
             ALTER TABLE available_in
                 ADD FOREIGN KEY (platform_id) REFERENCES platform (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE available_in
                 ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE actuacion
                 ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE actuacion
                 ADD FOREIGN KEY (actor_id) REFERENCES actor (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE direccion
                 ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE direccion
                 ADD FOREIGN KEY (director_id) REFERENCES director (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE audio_languages
                 ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE audio_languages
                 ADD FOREIGN KEY (language_id) REFERENCES language (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE subtitles_languages
                 ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
             ALTER TABLE subtitles_languages
                 ADD FOREIGN KEY (language_id) REFERENCES language (id)
-                    ON UPDATE RESTRICT
-                    ON DELETE RESTRICT");
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE");
 
             $db->query("
                 INSERT INTO language (name, ISO_code) VALUES

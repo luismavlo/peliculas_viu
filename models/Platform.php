@@ -44,9 +44,9 @@ class Platform
     public function save(): bool
     {
         $sql = "INSERT INTO platform VALUES(NULL, '{$this->getName()}', '{$this->getImage()}')";
-        $plaform = $this->db->query($sql);
+        $platform = $this->db->query($sql);
 
-        if(!$plaform) {
+        if(!$platform) {
             return false;
         }
         return true;
@@ -55,5 +55,33 @@ class Platform
     public function findAll()
     {
         return $this->db->query("SELECT * FROM platform");
+    }
+
+    public function update(): bool
+    {
+        $sql = "UPDATE platform SET name = '{$this->getName()}', image = '{$this->getImage()}' WHERE id={$this->getId()}";
+        $platform = $this->db->query($sql);
+
+        if(!$platform) {
+            return false;
+        }
+        return true;
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM platform WHERE id={$this->id}";
+        $platform = $this->db->query($sql);
+
+        if(!$platform) {
+            return false;
+        }
+        return true;
+    }
+
+    public function findOne()
+    {
+        $platform = $this->db->query("SELECT * FROM platform WHERE id = {$this->getId()}");
+        return $platform->fetch_object();
     }
 }
