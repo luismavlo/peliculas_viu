@@ -1,5 +1,5 @@
 
-<h3 class="heading-3">Listado de Plataformas</h3>
+<h3>Listado de Plataformas</h3>
 
 <table class="table">
     <tr class="table-header">
@@ -12,8 +12,8 @@
         <td><?= $platform->image; ?></td>
         <td><?= $platform->name; ?></td>
         <td>
-            <a class="button-dashboard-danger" href="<?=base_url?>Platform/delete&id=<?=$platform->id;?>"> Eliminar </a>
-            <a class="button-dashboard-secondary" href="<?=base_url?>Platform/update&id=<?=$platform->id;?>"> Actualizar </a>
+            <button class="button-dashboard-danger"> Eliminar </button>
+            <button class="button-dashboard-secondary"> Actualizar </button>
         </td>
     </tr>
     <?php endwhile; ?>

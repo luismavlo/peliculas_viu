@@ -24,10 +24,10 @@
             <a href="#">Series</a>
         </li>
         <li class="nav__menu-item">
-            <a href="#">Actores</a>
+            <a href="<?=base_url?>Actor/index">Actores</a>
         </li>
         <li class="nav__menu-item">
-            <a href="#">Directores</a>
+            <a href="<?=base_url?>Director/index">Directores</a>
         </li>
     </ul>
 </nav>
