@@ -7,7 +7,7 @@
     <th>Surname</th>
     <th>Birthdate</th>
     <th>Nationality</th>
-
+    <th>Acciones</th>
   </tr>
   <?php  while ($director = $directors->fetch_object()):?>
   <tr class="table-body">
