@@ -32,13 +32,7 @@ class PlatformController {
         $platform->setName($name);
         $platform->setImage($image);
 
-        if(isset($_GET['id'])){
-            $platform->setId($_GET['id']);
-            $save = $platform->update();
-        }else {
-            $save = $platform->save();
-        }
-
+        $save = $platform->save();
 
         if (!$save) {
             $_SESSION['create_platform'] = "failed";
@@ -52,47 +46,6 @@ class PlatformController {
 
     public function findAll(){
 
-    }
-
-    public function findOne()
-    {
-
-    }
-
-    public function update()
-    {
-        if(!isset($_GET['id'])){
-            $_SESSION['find_platform'] = 'failed';
-            header('Location:'.base_url.'Platform/index');
-        }
-
-        $edit = true;
-        $id = $_GET['id'];
-        $platform = new Platform();
-        $platform->setId($id);
-        $platformFoundIt = $platform->findOne();
-
-        require_once 'views/platforms/platformPage.php';
-    }
-
-    public function delete()
-    {
-        if(!isset($_GET['id'])){
-            $_SESSION['delete_platform'] = 'failed';
-        }
-
-        $id = $_GET['id'];
-        $platform = new Platform();
-        $platform->setId($id);
-        $delete = $platform->delete();
-
-        if(!$delete){
-            $_SESSION['delete_platform'] = 'failed';
-        }
-
-        $_SESSION['delete_platform'] = 'completed';
-
-        header('Location:'.base_url.'Platform/index');
     }
 
 }
