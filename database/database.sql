@@ -63,54 +63,54 @@ CREATE TABLE subtitles_languages (
                                      PRIMARY KEY (serie_id, language_id)
 );
 
--- Ejemplo con RESTRICT
+-- Ejemplo con CASCADE
 ALTER TABLE available_in
     ADD FOREIGN KEY (platform_id) REFERENCES platform (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE available_in
     ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE actuacion
     ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE actuacion
     ADD FOREIGN KEY (actor_id) REFERENCES actor (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE direccion
     ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE direccion
     ADD FOREIGN KEY (director_id) REFERENCES director (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE audio_languages
     ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE audio_languages
     ADD FOREIGN KEY (language_id) REFERENCES language (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE subtitles_languages
     ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 ALTER TABLE subtitles_languages
     ADD FOREIGN KEY (language_id) REFERENCES language (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT;
+        ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
