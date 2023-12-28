@@ -1,12 +1,12 @@
 
-<h3 class="heading-3">Listado de Director</h3>
+<h3 class="heading-3">Listado de Directores</h3>
 <table class="table">
   <tr class="table-header">
     <th>id</th>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Birthdate</th>
-    <th>Nationality</th>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Facha de Nacimiento</th>
+    <th>Nacionalidad</th>
     <th>Acciones</th>
   </tr>
   <?php  while ($director = $directors->fetch_object()):?>
