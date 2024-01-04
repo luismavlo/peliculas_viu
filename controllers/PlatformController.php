@@ -49,15 +49,7 @@ class PlatformController {
         $_SESSION['create_platform'] = "completed";
         header("Location: " . base_url . "Platform/index");
     }
-
-    public function findAll(){
-
-    }
-
-    public function findOne()
-    {
-
-    }
+  
 
     public function update()
     {

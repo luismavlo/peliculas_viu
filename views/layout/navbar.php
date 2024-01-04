@@ -21,7 +21,7 @@
             <a href="<?=base_url?>Platform/index">Plataformas</a>
         </li>
         <li class="nav__menu-item">
-            <a href="#">Series</a>
+            <a href="<?=base_url?>Serie/index">Series</a>
         </li>
         <li class="nav__menu-item">
             <a href="<?=base_url?>Actor/index">Actores</a>

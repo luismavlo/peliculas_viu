@@ -68,9 +68,6 @@ class Actor
         $this->nationality = $this->db->real_escape_string($nationality);
     }
 
-
-
-
     public function save(): bool
     {
         $sql = "INSERT INTO actor VALUES(NULL, '{$this->getName()}', '{$this->getSurname()}', '{$this->getBirthDate()}', '{$this->getNationality()}')";
