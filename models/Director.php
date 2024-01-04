@@ -116,5 +116,39 @@ class Director
         return $director->fetch_object();
     }
 
+    function convertToDirector(Object $o):Director{
+        $director=new Director();
+        $director->setId($o->id);
+        $director->setName($o->name);
+        $director->setSurname($o->surname);
+        $director->setBirthDate($o->birthdate);
+        $director->setNationality($o->nationality);
+        return $director;
+    
+    }
+    public function findAllDirectors() : ArrayObject
+    {
+
+        $allDirectors=new ArrayObject();
+        $all= $this->db->query("SELECT * FROM director");
+        $director=new Director();
+        while ($a=$all->fetch_object()):
+            $director= $director->convertToDirector($a);
+            $allDirectors->append($director);
+        endwhile;
+        return $allDirectors;
+    }
+    public function findDirector(int $i):Director
+    {
+        $director=new Director();
+        $d = $this->db->query("SELECT * FROM director WHERE id = {$i}");
+        $d=$d->fetch_object();
+        $director=$director->convertToDirector($d);
+    
+        return $director;
+    }
+
+
+
 
 }

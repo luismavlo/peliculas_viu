@@ -5,14 +5,18 @@ class Serie
     private readonly string $name;
     private Platform $platform;
     private readonly string $review;
- //   private Director $director[];
- //   private Actor $actores[];
- //   private Languages $languages[];
+    private Director $director;
+    private Actor $actor;
+    private ArrayObject $languages;
+    
 
     public function __construct()
     {
         $this->db = Database::connect();
         $this->platform=new Platform();
+        $this->directors=new ArrayObject();
+        $this->actor=new Actor();
+        $this->languages=new ArrayObject();
     }
 
     public function getId(): string
@@ -65,6 +69,15 @@ class Serie
     public function setReview(string $review): void
     {
         $this->review = $this->db->real_escape_string($review);
+    }
+
+    public function getActor(): Actor
+    {
+        return $this->actor;
+    }
+    public function getDirector(): Director
+    {
+        return $this->director;
     }
 
     public function save(): bool
@@ -138,5 +151,18 @@ class Serie
         $serie=$serie->convertToSerie($s);
         return $serie;
     }
+
+    public function savePerformance(): bool
+    {
+        $sql = "INSERT INTO actuacion VALUES(NULL, '{$this->getId()}', '{$this->actor->getId()}' }')";
+        echo $sql;
+        $performance = $this->db->query($sql);
+
+        if(!$performance) {
+            return false;
+        }
+        return true;
+    }
    
+    
 }

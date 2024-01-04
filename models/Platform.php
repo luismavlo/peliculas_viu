@@ -107,9 +107,7 @@ class Platform
         $platform=new Platform();
         $p = $this->db->query("SELECT * FROM platform WHERE id = {$i}");
         $p=$p->fetch_object();
-        $platform->setId($p->id);
-        $platform->setName($p->name);
-        $platform->setImage($p->image);
+        $platform=$platform->convertToPlatform($p);
     
         return $platform;
     }

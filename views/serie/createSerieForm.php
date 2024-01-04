@@ -33,6 +33,57 @@
         </select>
 
 </p>
+
+<p class="form-group">
+        <label for="actor">Actores y Actrices </label>
+       <select  name="actor" multiple>
+            <?php 
+                $a=new Actor();
+                $allActors='';
+                $allActors=$a->findAllActors();
+           
+               
+            ?>
+                <option selected="true"  value="<?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getActor()->getId()):''; ?>"> " <?= isset($serieFoundIt) && is_object($serieFoundIt) ? (
+                    
+                  $serieFoundIt->getActor()->getName().$serieFoundIt->getActor()->getSurname()) : 'Seleccione el actor o la actriz'; ?>"
+                </option> 
+
+                <?php 
+                for ($i=0;$i<$allActors->count();$i++){ 
+                    $a=$allActors->offsetGet($i)?>
+                    <option value=<?=$a->getId(); ?> > "<?=$a->getName().' ' .$a->getSurname(); ?>"</option>  
+                        <?php }   ?>   
+     
+        </select>
+
+</p>
+
+<p class="form-group">
+        <label for="Director">Director </label>
+       <select  name="director" multiple>
+            <?php 
+                $d=new Director();
+                $allDirectors='';
+                $allDirectors=$d->findAllDirectors();
+                echo $allDirectors->count();
+           
+               
+            ?>
+                <option selected="true"  value="<?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getDirector()->getId()):''; ?>"> " <?= isset($serieFoundIt) && is_object($serieFoundIt) ? (
+                   $serieFoundIt->getDirector()->getName().' '.$serieFoundIt->getDirector()->getSurname()) : 'Seleccione el director'; ?>"
+                </option> 
+
+                <?php 
+                for ($i=0;$i<$allDirectors->count();$i++){ 
+                    $a=$allDirectors->offsetGet($i)?>
+                    <option value=<?=$a->getId(); ?> > "<?=$a->getName().' ' .$a->getSurname(); ?>"</option>  
+                        <?php }   ?>   
+     
+        </select>
+
+</p>
+
     <p class="form-group">
         <fieldset>
             <legend>Review </legend>

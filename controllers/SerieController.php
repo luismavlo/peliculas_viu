@@ -3,6 +3,8 @@
 require_once 'models/Serie.php';
 require_once 'C:/xampp/htdocs/actividad1-viu/models/Serie.php';
 require_once 'C:/xampp/htdocs/actividad1-viu/models/Platform.php';
+require_once 'C:/xampp/htdocs/actividad1-viu/models/Actor.php';
+require_once 'C:/xampp/htdocs/actividad1-viu/models/Director.php';
 class SerieController {
 
     public function index(){
