@@ -3,6 +3,7 @@ class Language
 {
     private readonly string $id;
     private readonly string $name;
+
     private readonly string $isoCode;
    
     private $db;
@@ -11,7 +12,6 @@ class Language
     {
         $this->db = Database::connect();
     }
-
 
     public function getId(): string
     {
@@ -22,7 +22,6 @@ class Language
     {
         $this->id = $id;
     }
-
 
     public function getName(): string
     {
@@ -90,6 +89,5 @@ class Language
         $language = $this->db->query("SELECT * FROM language WHERE id = {$this->getId()}");
         return $language->fetch_object();
     }
-
 
 }

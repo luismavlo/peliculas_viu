@@ -68,9 +68,6 @@ class Actor
         $this->nationality = $this->db->real_escape_string($nationality);
     }
 
-
-
-
     public function save(): bool
     {
         $sql = "INSERT INTO actor VALUES(NULL, '{$this->getName()}', '{$this->getSurname()}', '{$this->getBirthDate()}', '{$this->getNationality()}')";
@@ -114,6 +111,37 @@ class Actor
     {
         $actor = $this->db->query("SELECT * FROM actor WHERE id = {$this->getId()}");
         return $actor->fetch_object();
+    }
+
+    function convertToActor(Object $a):Actor{
+        $actor=new Actor();
+        $actor->setId($a->id);
+        $actor->setName($a->name);
+        $actor->setSurname($a->surname);
+        $actor->setBirthDate($a->birthdate);
+        $actor->setNationality($a->nationality);
+        return $actor;
+    
+    }
+    public function findAllActors() : ArrayObject
+    {
+        $allActors=new ArrayObject();
+        $all= $this->db->query("SELECT * FROM actor");
+        $actor=new Actor();
+        while ($a=$all->fetch_object()):
+            $actor= $actor->convertToActor($a);
+            $allActors->append($actor);
+        endwhile;
+        return $allActors;
+    }
+    public function findActor(int $i):Actor
+    {
+        $actor=new Actor();
+        $a = $this->db->query("SELECT * FROM actor WHERE id = {$i}");
+        $a=$a->fetch_object();
+        $actor=$actor->convertToActor($a);
+    
+        return $actor;
     }
 
 

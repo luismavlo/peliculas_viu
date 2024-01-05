@@ -52,11 +52,7 @@ class Platform
         return true;
     }
 
-    public function findAll()
-    {
-        return $this->db->query("SELECT * FROM platform");
-    }
-
+   
     public function update(): bool
     {
         $sql = "UPDATE platform SET name = '{$this->getName()}', image = '{$this->getImage()}' WHERE id={$this->getId()}";
@@ -78,10 +74,42 @@ class Platform
         }
         return true;
     }
-
-    public function findOne()
-    {
+    
+  
+    public function findOne(){
         $platform = $this->db->query("SELECT * FROM platform WHERE id = {$this->getId()}");
         return $platform->fetch_object();
     }
+
+    public function findAll() : ArrayObject
+    {
+        $allPlatforms=new ArrayObject();
+        $all= $this->db->query("SELECT * FROM platform");
+        $platform=new Platform();
+        while ($p=$all->fetch_object()):
+            $platform= $platform->convertToPlatform($p);
+            $allPlatforms->append($platform);
+        endwhile;
+        return $allPlatforms;
+    }
+
+    function convertToPlatform(Object $p):Platform
+    {
+        $platform=new Platform();
+        $platform->setId($p->id);
+        $platform->setName($p->name);
+        $platform->setImage($p->image);
+        return $platform;
+    
+    }
+    public function findPlatform(int $i):Platform
+    {
+        $platform=new Platform();
+        $p = $this->db->query("SELECT * FROM platform WHERE id = {$i}");
+        $p=$p->fetch_object();
+        $platform=$platform->convertToPlatform($p);
+    
+        return $platform;
+    }
+
 }
