@@ -29,5 +29,8 @@
         <li class="nav__menu-item">
             <a href="<?=base_url?>Director/index">Directores</a>
         </li>
+        <li class="nav__menu-item">
+            <a href="<?=base_url?>Language/index">Idiomas</a>
+        </li>
     </ul>
 </nav>
