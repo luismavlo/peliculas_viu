@@ -6,7 +6,7 @@ class Serie
     private Platform $platform;
     private readonly string $review;
     private Director $director;
-    private Actor $actor;
+    private ArrayObject $actors;
     private ArrayObject $languages;
     
 
@@ -14,8 +14,8 @@ class Serie
     {
         $this->db = Database::connect();
         $this->platform=new Platform();
-        $this->directors=new ArrayObject();
-        $this->actor=new Actor();
+        $this->director=new Director();
+        $this->actors=new ArrayObject();
         $this->languages=new ArrayObject();
     }
 
@@ -71,25 +71,61 @@ class Serie
         $this->review = $this->db->real_escape_string($review);
     }
 
-    public function getActor(): Actor
+    public function getActors(): ArrayObject
     {
-        return $this->actor;
+        return $this->actors;
+    }
+    public function setActors(ArrayObject $a): void
+    {
+        $this->actors=$a;
     }
     public function getDirector(): Director
     {
         return $this->director;
     }
+    public function setDirector(Director $d) 
+    {
+         $this->director=$d;
+    }
 
-    public function save(): bool
+    public function addActor(Actor $a){
+        $this->actors->append($a);
+    }
+
+    public function addActors(Array $a){
+        $i=0;
+        $index_actor='';
+        $actor=new Actor();
+
+        for($i=0;$i<count($a);$i++){
+            $index_actor=$a[$i];
+            $actor=$actor->findActor($index_actor);
+            $this->addActor($actor);
+        }
+        
+       
+    }
+    
+    public function findId(string $name): string
+    {
+        $sql = "SELECT * FROM serie WHERE title in ('{$name}')";
+        echo $sql;
+        $sql=$this->db->query($sql);
+        $id=$sql->fetch_object()->id;
+        return $id;
+    }
+    public function save(): string
     {
         $sql = "INSERT INTO serie VALUES(NULL, '{$this->getName()}', '{$this->getPlatform()->getId()}' , '{$this->getReview()}')";
-        echo $sql;
+       
         $serie = $this->db->query($sql);
-
+        $id=0;
+      
+       
         if(!$serie) {
-            return false;
+            return '0';
         }
-        return true;
+        return $sql;
     }
 
     public function findAll(): ArrayObject
@@ -136,6 +172,8 @@ class Serie
         $p=$serie->getPlatform();
         $p=$p->findPlatform($s->platform_id);
         $serie->setPlatform($p);
+        $serie->setActors($serie->findActorsOfSerie($s->id));
+        $serie->setDirector($serie->findDirectorOfSerie($s->id));
         return $serie;
     
     }
@@ -144,25 +182,82 @@ class Serie
         return $serie->fetch_object();
     }
 
-    public function findSerie(int $id): Serie{
+    public function findSerie(string $id): Serie{
         $serie=new Serie();
+        $actorsList= new ArrayObject();
+        $director = new Director;
         $s = $this->db->query("SELECT * FROM serie WHERE id = {$id}");
         $s=$s->fetch_object();
         $serie=$serie->convertToSerie($s);
+        $actorsList=$serie->findActorsOfSerie($id);
+        $serie->setActors($actorsList);
+        $actorsList=$serie->findDirectorOfSerie($id);
+        $serie->setDirector($director);
+         
         return $serie;
+    }
+
+    public function findActorsOfSerie(string $id): ArrayObject{
+        $actorsList=new ArrayObject();
+        $i=0;
+        $actors=$this->db->query("SELECT * FROM actuacion WHERE serie_id = {$id}");
+        while($actor=$actors->fetch_object()):
+            $a=$this->db->query("SELECT * FROM actor WHERE id = {$actor->actor_id}");
+            $actor=new Actor();
+            $a=$a->fetch_object();
+            $actor=$actor->convertToActor($a);
+            $actorsList->append($actor);
+        endwhile;
+        return $actorsList;
     }
 
     public function savePerformance(): bool
     {
-        $sql = "INSERT INTO actuacion VALUES(NULL, '{$this->getId()}', '{$this->actor->getId()}' }')";
-        echo $sql;
-        $performance = $this->db->query($sql);
-
-        if(!$performance) {
-            return false;
+       $i=0;
+       $actorsList=$this->getActors();
+       $performances =new ArrayObject();
+       
+        for($i=0;$i<$actorsList->count();$i++){
+            $sql = "INSERT INTO actuacion VALUES('{$this->getId()}','{$this->actors->offsetGet($i)->getId()}')";
+            echo $sql;
+            $performances->append( $this->db->query($sql));
         }
+        $i=0;
+        while($i<$performances->count()):
+            $performance= $performances->offsetGet($i);
+            if(!$performance) {
+                return false;
+        }
+        $i++;;
+        endwhile;
         return true;
+   
+    }  
+    public function saveDirect(): bool
+    {
+        $sql = "INSERT INTO direccion VALUES( '{$this->director->getId()}', '{$this->getId()}')";
+       return $this->db->query($sql);
     }
+ 
+    public function findDirectorOfSerie(string $id): Director{
+        $director=new Director();
+        $d=new Director();
+        $i=0;
+        $sql=$this->db->query("SELECT * FROM direccion WHERE serie_id = {$id}");
+       
+        $sql=$sql->fetch_object();
+        $director_id=$sql->director_id;
+        $sql=$this->db->query("SELECT * FROM director WHERE id = {$director_id}");
+        $director=$sql->fetch_object();
+        $d=$d->convertToDirector($director);
+      
+        
+        return $d;
+    }
+        
+}
+       
+
+       
    
     
-}

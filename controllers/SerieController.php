@@ -1,10 +1,11 @@
 <?php
-
+require_once 'C:/xampp/htdocs/actividad1-viu/models/Director.php';
 require_once 'models/Serie.php';
 require_once 'C:/xampp/htdocs/actividad1-viu/models/Serie.php';
 require_once 'C:/xampp/htdocs/actividad1-viu/models/Platform.php';
 require_once 'C:/xampp/htdocs/actividad1-viu/models/Actor.php';
 require_once 'C:/xampp/htdocs/actividad1-viu/models/Director.php';
+
 class SerieController {
 
     public function index(){
@@ -24,57 +25,55 @@ class SerieController {
             $_SESSION['create_serie'] = "failed";
             return;
         }
-       
+        $serie = new Serie();
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $platformId = isset($_POST['platform']) ? trim($_POST['platform']) : '';
         $review = isset($_POST['review'])  ? ($_POST['review']): '' ;
-     
-       $r='';
-
+        $actors = isset($_POST['actors'])  ? ($_POST['actors']): '' ;
+        $director = isset($_POST['director']) ? trim($_POST['director']) : '';
+        $r='';
+      
+    
         if(is_array($review)){
             $r=implode(", ",$review);
         }
                          
         $review=$r;
-        echo $platformId;
-       
-        if (empty($name)){
-            echo "noombre";
-        }
-        if (empty($review)){
-            echo "review";
-        }
-        if (empty($platformId)){
-            echo "platformId";
-        }
+        $serie->addActors($actors);
 
+ 
 
         if (empty($name) || empty($review)|| empty($platformId)) {
-            echo "vacio";
+
             $_SESSION['create_serie'] = "failed";
            
             return;
         }
-       
-        
-    
-
+      
         echo "Controlador Serie, Acción Index:".$name;
         // Puedes agregar más validaciones según tus necesidades
 
-        $serie = new Serie();
+       
         $serie->setName($name);
         $serie->setPlatformId($platformId);
         $serie->setReview($review);
-
+        $d=new Director();
+        $d= $d->findDirector($director);
+        $serie->setDirector($d);
     
         if(isset($_GET['id'])){
             $serie->setId($_GET['id']);
             $save = $serie->update();
         }else {
             $save = $serie->save();
+            $id=$serie->findId($serie->getName());
+            $serie->setId($id);
+            
+            $p=$serie->savePerformance();   
+            $d=$serie->saveDirect();
+            
         }
-
+       
        
         if (!$save) {
             $_SESSION['create_serie'] = "failed";
@@ -84,6 +83,9 @@ class SerieController {
 
         $_SESSION['create_serie'] = "completed";
         header("Location: " . base_url . "Serie/index");
+
+    
+    
     }
 
 

@@ -134,7 +134,7 @@ class Actor
         endwhile;
         return $allActors;
     }
-    public function findActor(int $i):Actor
+    public function findActor(string $i):Actor
     {
         $actor=new Actor();
         $a = $this->db->query("SELECT * FROM actor WHERE id = {$i}");
@@ -142,6 +142,14 @@ class Actor
         $actor=$actor->convertToActor($a);
     
         return $actor;
+    }
+    public function printActors(ArrayObject $a): String{
+       $i=0;
+       $lista= [];
+       for($i=0;$i<$a->count();$i++){
+        array_push($lista, $a->offsetGet($i)->getName().' '.$a->offsetGet($i)->getSurname()) ;
+       }
+       return implode(', ', $lista);
     }
 
 
