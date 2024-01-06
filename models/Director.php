@@ -118,7 +118,7 @@ class Director
     }
 
     function convertToDirector(Object $o):Director{
-        echo $o->id;
+    
         $director=new Director();
         $director->setId($o->id);
         $director->setName($o->name);

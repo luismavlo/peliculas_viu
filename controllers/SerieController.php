@@ -67,9 +67,9 @@ class SerieController {
         }else {
             $save = $serie->save();
             $id=$serie->findId($serie->getName());
-            echo "aqui".$id;
             $serie->setId($id);
-            $p=$serie->savePerformance();
+            
+            $p=$serie->savePerformance();   
             $d=$serie->saveDirect();
             
         }
