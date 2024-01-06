@@ -11,6 +11,7 @@ class Director
     public function __construct()
     {
         $this->db = Database::connect();
+       
     }
 
 
@@ -117,6 +118,7 @@ class Director
     }
 
     function convertToDirector(Object $o):Director{
+        echo $o->id;
         $director=new Director();
         $director->setId($o->id);
         $director->setName($o->name);
@@ -126,6 +128,7 @@ class Director
         return $director;
     
     }
+    
     public function findAllDirectors() : ArrayObject
     {
 

@@ -6,6 +6,7 @@
         $url_action = base_url."Serie/create";
     }
     
+    $found=isset($serieFoundIt) && is_object($serieFoundIt);
 ?>
 
 <form action="<?=$url_action?>" method="POST" class="form" style=" width: 60%">
@@ -21,7 +22,7 @@
                 $allPlatforms='';
                 $allPlatforms=$p->findAll();
             ?>
-                <option selected="true"  value="<?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getPlatform()->getId()):''; ?>"> " <?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getPlatform()->getName()) : 'Seleccione la plataforma'; ?>"
+                <option selected="true"  value="<?= $found ? ($serieFoundIt->getPlatform()->getId()):''; ?>"> " <?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getPlatform()->getName()) : 'Seleccione la plataforma'; ?>"
                 </option> 
 
                 <?php 
@@ -35,33 +36,50 @@
 </p>
 
 <p class="form-group">
-        <label for="actor">Actores y Actrices </label>
-       <select  name="actor" multiple>
-            <?php 
+        <label for="actors[]">Actores y Actrices </label>
+       <select  name="actors[]" multiple>
+            <?php
+             
                 $a=new Actor();
                 $allActors='';
+                
                 $allActors=$a->findAllActors();
-           
                
-            ?>
-                <option selected="true"  value="<?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getActor()->getId()):''; ?>"> " <?= isset($serieFoundIt) && is_object($serieFoundIt) ? (
+               
+                $actorsOfSerie=new ArrayObject();
+                if($found){
+                    $actorsOfSerie=$serieFoundIt->getActors();
+                }
+                $a->printActors($actorsOfSerie);
+                $i=0;
+                
+             
+                for ($i=0;$i<$actorsOfSerie->count();$i++){ 
+                    $a=$actorsOfSerie->offsetGet($i) ;
+                    $nameandsurname=$a->getName().' '.$a->getSurname();
+                    echo $nameandsurname;
+                ?>                   
                     
-                  $serieFoundIt->getActor()->getName().$serieFoundIt->getActor()->getSurname()) : 'Seleccione el actor o la actriz'; ?>"
-                </option> 
+                    <option selected="true" value=<?= $found ? ($a->getId()):''; ?>> 
+                    " <?= $found ? $nameandsurname  : 'Seleccione el actor o la actriz'; ?>"
+                    </option> 
 
-                <?php 
+                <?php    }?>
+
+                <?php
                 for ($i=0;$i<$allActors->count();$i++){ 
-                    $a=$allActors->offsetGet($i)?>
-                    <option value=<?=$a->getId(); ?> > "<?=$a->getName().' ' .$a->getSurname(); ?>"</option>  
-                        <?php }   ?>   
+                    $a=$allActors->offsetGet($i);
+                ?>
+                    <option name="actors[]" value=<?=$a->getId();?>> "<?=$a->getName().' ' .$a->getSurname(); ?>"</option>  
+                <?php    }   ?>   
      
         </select>
 
 </p>
 
 <p class="form-group">
-        <label for="Director">Director </label>
-       <select  name="director" multiple>
+        <label for="director">Director </label>
+       <select  name="director" >
             <?php 
                 $d=new Director();
                 $allDirectors='';
@@ -70,15 +88,18 @@
            
                
             ?>
-                <option selected="true"  value="<?= isset($serieFoundIt) && is_object($serieFoundIt) ? ($serieFoundIt->getDirector()->getId()):''; ?>"> " <?= isset($serieFoundIt) && is_object($serieFoundIt) ? (
-                   $serieFoundIt->getDirector()->getName().' '.$serieFoundIt->getDirector()->getSurname()) : 'Seleccione el director'; ?>"
+                <option selected="true"  value="<?= $found ? ($serieFoundIt->getDirector()->getId()):''; ?>"> " 
+                <?= $found ? ($serieFoundIt->getDirector()->getName().' '.$serieFoundIt->getDirector()->getSurname()) : 'Seleccione el director'; ?>"
                 </option> 
 
-                <?php 
+                <?php
                 for ($i=0;$i<$allDirectors->count();$i++){ 
-                    $a=$allDirectors->offsetGet($i)?>
-                    <option value=<?=$a->getId(); ?> > "<?=$a->getName().' ' .$a->getSurname(); ?>"</option>  
-                        <?php }   ?>   
+                    $a=$allDirectors->offsetGet($i);
+                ?>
+                    <option name="director" value=<?=$a->getId();?>> "<?=$a->getName().' ' .$a->getSurname(); ?>"</option>  
+                <?php    }   ?>   
+
+
      
         </select>
 
