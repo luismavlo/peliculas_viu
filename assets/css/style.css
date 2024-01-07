@@ -420,3 +420,78 @@ body {
     font-size: 2rem;
     margin-bottom: 1rem;
 }
+
+.select-container {
+    position: relative;
+    width: 200px;
+}
+
+
+.custom-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+
+.select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+/* Estilo para el select múltiple */
+.custom-multiple-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+    height: 150px; /* Altura personalizable */
+    overflow-y: auto;
+}
+
+/* Estilo para las opciones del select múltiple */
+.custom-multiple-select option {
+    padding: 10px;
+}
+
+/* Estilo para la flecha del select múltiple */
+.multiple-select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.textarea-container {
+    margin-bottom: 20px;
+}
+
+/* Estilo para el Label */
+.textarea-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Estilo para el TextArea */
+.custom-textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
