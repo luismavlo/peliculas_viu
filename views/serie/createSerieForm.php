@@ -17,6 +17,7 @@ $found = isset($serieFoundIt) && is_object($serieFoundIt);
       ? $serieFoundIt->getName()
       : "" ?>" />
   </p>
+    <?php if(!isset($edit)):  ?>
     <p class="form-group">
         <label for="platform">Plataforma </label>
         <div class="select-container">
@@ -60,15 +61,27 @@ $found = isset($serieFoundIt) && is_object($serieFoundIt);
     </div>
   </p>
 
+    <?php endif; ?>
+
   <p class="form-group">
     <div class="textarea-container">
         <label for="review" class="textarea-label">Escriba la review:</label>
-        <textarea id="review" name="review" class="custom-textarea" rows="4" placeholder="Ingrese su review aquí..."></textarea>
+        <textarea id="review" name="review" class="custom-textarea" rows="4" placeholder="Ingrese su review aquí..."
+        ><?= isset(
+            $serieFoundIt
+          ) && is_object($serieFoundIt)
+            ? $serieFoundIt->getReview()
+            : "" ?>
+        </textarea>
     </div>
   </p>
-  <p>
-    <br>
-    <input type="submit" value="Crear Serie" class="button-dashboard-primary">
-    <br>
-  </p>
+  <?php if(isset($edit)): ?>
+      <p>
+          <input type="submit" value="Editar serie" class="button-dashboard-primary">
+      </p>
+  <?php else: ?>
+      <p>
+          <input type="submit" value="Crear serie" class="button-dashboard-primary">
+      </p>
+  <?php endif; ?>
 </form>

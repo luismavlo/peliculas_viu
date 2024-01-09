@@ -144,7 +144,7 @@ class Serie
     public function update(): bool
     {
       
-        $sql = "UPDATE serie SET title = '{$this->getName()}', platform_id = '{$this->getPlatform()->getId()}', review = '{$this->getReview()}' WHERE id={$this->getId()}";
+        $sql = "UPDATE serie SET title = '{$this->getName()}', review = '{$this->getReview()}' WHERE id={$this->getId()}";
        
         $serie = $this->db->query($sql);
      

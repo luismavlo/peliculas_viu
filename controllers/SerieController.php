@@ -36,10 +36,23 @@ class SerieController {
         $actorIds = isset($_POST['actors'])  ? ($_POST['actors']): '' ;
         $directorId = isset($_POST['director']) ? trim($_POST['director']) : '';
 
+      $serie = new Serie();
 
+      if(isset($_GET['id'])){
+        if (empty($name) || empty($review) ) {
+          $_SESSION['create_serie'] = "failed";
+          return;
+        }
+
+        $serie->setName($name);
+        $serie->setReview($review);
+
+        $serie->setId($_GET['id']);
+        $save = $serie->update();
+      }else {
         if (empty($name) || empty($review)|| empty($platformId) || empty($directorId) || count($actorIds) == 0 ) {
-            $_SESSION['create_serie'] = "failed";
-            return;
+          $_SESSION['create_serie'] = "failed";
+          return;
         }
 
         $actorIds = array_map('intval', explode(',', implode(',', $actorIds)));
@@ -52,8 +65,6 @@ class SerieController {
           return;
         }
 
-        $serie = new Serie();
-
         $serie->addActors($actorIds);
         $serie->setName($name);
         $serie->setPlatformId($platformId);
@@ -63,20 +74,15 @@ class SerieController {
 
         $director= $director->findDirector($directorId);
         $serie->setDirector($director);
-    
-        if(isset($_GET['id'])){
-            $serie->setId($_GET['id']);
-            $save = $serie->update();
-        }else {
-            $save = $serie->save();
-            $serieId = $serie->findSerieIdByName($serie->getName());
-            $serie->setId($serieId);
-            
-            $serie->savePerformance();
-            $serie->saveDirect();
-        }
-       
-       
+
+        $save = $serie->save();
+        $serieId = $serie->findSerieIdByName($serie->getName());
+        $serie->setId($serieId);
+
+        $serie->savePerformance();
+        $serie->saveDirect();
+      }
+
         if (!$save) {
             $_SESSION['create_serie'] = "failed";
             header("Location: " . base_url . "Serie/index");
