@@ -1,80 +1,88 @@
 <?php
-require_once 'C:/xampp/htdocs/actividad1-viu/models/Director.php';
-require_once 'models/Serie.php';
-require_once 'C:/xampp/htdocs/actividad1-viu/models/Serie.php';
-require_once 'C:/xampp/htdocs/actividad1-viu/models/Platform.php';
-require_once 'C:/xampp/htdocs/actividad1-viu/models/Actor.php';
-require_once 'C:/xampp/htdocs/actividad1-viu/models/Director.php';
+require_once __DIR__ . '/../models/Director.php';
+require_once './models/Serie.php';
+require_once __DIR__ . '/../models/Serie.php';
+require_once __DIR__ . '/../models/Platform.php';
+require_once __DIR__ . '/../models/Actor.php';
+
 
 class SerieController {
 
     public function index(){
-       
-        //$id = isset($_GET['id']) ? trim($_GET['id']) : '';
-        // echo "Controlador Serie, Acción Index:".$id;
         $serie = new Serie();
         $series = $serie->findAll();
-         require_once 'views/serie/seriePage.php';
+        $platform = new Platform();
+        $platforms = $platform->findAll();
+        $director = new Director();
+        $directors = $director->findAllDirectors();
+        $actor = new Actor();
+        $actors = $actor->findAllActors();
+
+        require_once 'views/serie/seriePage.php';
      }
      public function create()
     {
      
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-
             header("Location: " . base_url . "Serie/index");
             $_SESSION['create_serie'] = "failed";
             return;
         }
-        $serie = new Serie();
+
+
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $platformId = isset($_POST['platform']) ? trim($_POST['platform']) : '';
         $review = isset($_POST['review'])  ? ($_POST['review']): '' ;
-        $actors = isset($_POST['actors'])  ? ($_POST['actors']): '' ;
-        $director = isset($_POST['director']) ? trim($_POST['director']) : '';
-        $r='';
-      
-    
-        if(is_array($review)){
-            $r=implode(", ",$review);
+        $actorIds = isset($_POST['actors'])  ? ($_POST['actors']): '' ;
+        $directorId = isset($_POST['director']) ? trim($_POST['director']) : '';
+
+      $serie = new Serie();
+
+      if(isset($_GET['id'])){
+        if (empty($name) || empty($review) ) {
+          $_SESSION['create_serie'] = "failed";
+          return;
         }
-                         
-        $review=$r;
-        $serie->addActors($actors);
 
- 
+        $serie->setName($name);
+        $serie->setReview($review);
 
-        if (empty($name) || empty($review)|| empty($platformId)) {
-
-            $_SESSION['create_serie'] = "failed";
-           
-            return;
+        $serie->setId($_GET['id']);
+        $save = $serie->update();
+      }else {
+        if (empty($name) || empty($review)|| empty($platformId) || empty($directorId) || count($actorIds) == 0 ) {
+          $_SESSION['create_serie'] = "failed";
+          return;
         }
-      
-        echo "Controlador Serie, Acción Index:".$name;
-        // Puedes agregar más validaciones según tus necesidades
 
-       
+        $actorIds = array_map('intval', explode(',', implode(',', $actorIds)));
+        $directorId = intval($directorId);
+        $platformId = intval($platformId);
+
+
+        if(!is_numeric($directorId) || !is_numeric($platformId)){
+          $_SESSION['create_serie'] = "failed";
+          return;
+        }
+
+        $serie->addActors($actorIds);
         $serie->setName($name);
         $serie->setPlatformId($platformId);
         $serie->setReview($review);
-        $d=new Director();
-        $d= $d->findDirector($director);
-        $serie->setDirector($d);
-    
-        if(isset($_GET['id'])){
-            $serie->setId($_GET['id']);
-            $save = $serie->update();
-        }else {
-            $save = $serie->save();
-            $id=$serie->findId($serie->getName());
-            $serie->setId($id);
-            
-            $p=$serie->savePerformance();   
-            $d=$serie->saveDirect();
-            
-        }
-       
-       
+
+        $director= new Director();
+
+        $director= $director->findDirector($directorId);
+        $serie->setDirector($director);
+
+        $save = $serie->save();
+        $serieId = $serie->findSerieIdByName($serie->getName());
+        $serie->setId($serieId);
+
+        $serie->savePerformance();
+        $serie->saveDirect();
+      }
+
         if (!$save) {
             $_SESSION['create_serie'] = "failed";
             header("Location: " . base_url . "Serie/index");
@@ -83,9 +91,6 @@ class SerieController {
 
         $_SESSION['create_serie'] = "completed";
         header("Location: " . base_url . "Serie/index");
-
-    
-    
     }
 
 
@@ -100,10 +105,23 @@ class SerieController {
         }
 
         $edit = true;
-        $id = $_GET['id'];
+        $serieId = $_GET['id'];
+
         $serie = new Serie();
-        $serie->setId($id);
-        $serieFoundIt = $serie->findSerie($id);
+        $serie->setId($serieId);
+        $serieFoundIt = $serie->findSerie($serieId);
+
+
+        $platform = new Platform();
+        $platforms = $platform->findAll();
+        $director = new Director();
+        $directors = $director->findAllDirectors();
+        $actor = new Actor();
+        $actors = $actor->findAllActors();
+
+        $directorSelected = $serie->findDirectorOfSerie($serieId);
+
+
 
         require_once 'views/serie/seriePage.php';
     }
@@ -130,7 +148,12 @@ class SerieController {
         header('Location:'.base_url.'Serie/index');
     }
 
-
+    public static function findActorsInSerie($serie)
+    {
+      $actor = new Actor();
+      return $actor->printActors($serie->getActors());
+    }
 
 }
+
 

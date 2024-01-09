@@ -106,7 +106,7 @@ class Serie
        
     }
     
-    public function findId(string $name): string
+    public function findSerieIdByName(string $name): string
     {
         $sql = "SELECT * FROM serie WHERE title in ('{$name}')";
         echo $sql;
@@ -144,7 +144,7 @@ class Serie
     public function update(): bool
     {
       
-        $sql = "UPDATE serie SET title = '{$this->getName()}', platform_id = '{$this->getPlatform()->getId()}', review = '{$this->getReview()}' WHERE id={$this->getId()}";
+        $sql = "UPDATE serie SET title = '{$this->getName()}', review = '{$this->getReview()}' WHERE id={$this->getId()}";
        
         $serie = $this->db->query($sql);
      
@@ -191,7 +191,7 @@ class Serie
         $serie=$serie->convertToSerie($s);
         $actorsList=$serie->findActorsOfSerie($id);
         $serie->setActors($actorsList);
-        $actorsList=$serie->findDirectorOfSerie($id);
+        $serie->findDirectorOfSerie($id);
         $serie->setDirector($director);
          
         return $serie;
@@ -238,20 +238,18 @@ class Serie
         $sql = "INSERT INTO direccion VALUES( '{$this->director->getId()}', '{$this->getId()}')";
        return $this->db->query($sql);
     }
- 
+
     public function findDirectorOfSerie(string $id): Director{
-        $director=new Director();
         $d=new Director();
-        $i=0;
         $sql=$this->db->query("SELECT * FROM direccion WHERE serie_id = {$id}");
-       
+
         $sql=$sql->fetch_object();
         $director_id=$sql->director_id;
         $sql=$this->db->query("SELECT * FROM director WHERE id = {$director_id}");
         $director=$sql->fetch_object();
         $d=$d->convertToDirector($director);
-      
-        
+
+
         return $d;
     }
         

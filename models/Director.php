@@ -117,17 +117,16 @@ class Director
         return $director->fetch_object();
     }
 
-    function convertToDirector(Object $o):Director{
-    
-        $director=new Director();
-        $director->setId($o->id);
-        $director->setName($o->name);
-        $director->setSurname($o->surname);
-        $director->setBirthDate($o->birthdate);
-        $director->setNationality($o->nationality);
-        return $director;
-    
-    }
+  public function convertToDirector(object $directorData): Director {
+    $director = new Director();
+    $director->setId($directorData->id ?? null);
+    $director->setName($directorData->name ?? '');
+    $director->setSurname($directorData->surname ?? '');
+    $director->setBirthDate($directorData->birthdate ?? null);
+    $director->setNationality($directorData->nationality ?? '');
+
+    return $director;
+  }
     
     public function findAllDirectors() : ArrayObject
     {
@@ -141,14 +140,12 @@ class Director
         endwhile;
         return $allDirectors;
     }
-    public function findDirector(int $i):Director
+    public function findDirector(int $directorId):Director
     {
-        $director=new Director();
-        $d = $this->db->query("SELECT * FROM director WHERE id = {$i}");
-        $d=$d->fetch_object();
-        $director=$director->convertToDirector($d);
-    
-        return $director;
+        $director= new Director();
+        $directorFoundId = $this->db->query("SELECT * FROM director WHERE id = {$directorId}");
+        $directorFoundId= $directorFoundId->fetch_object();
+        return $director->convertToDirector($directorFoundId);
     }
 
 
