@@ -44,7 +44,32 @@ $found = isset($serieFoundIt) && is_object($serieFoundIt);
           <?php endforeach; ?>
         </select>
     </div>
+  </p>
 
+  <p class="form-group">
+    <label for="languageAudios[]">Idioma Audio Disponibles </label>
+    <div class="custom-select">
+        <select  name="languageAudios[]" multiple class="custom-multiple-select">
+          <?php foreach ($languages as $language): ?>
+              <option value="<?= $language->getId(); ?>">
+                <?= $language->getName(); ?>
+              </option>
+          <?php endforeach; ?>
+        </select>
+    </div>
+  </p>
+
+  <p class="form-group">
+    <label for="languageSubtitulos[]">Idioma Subtitulos Disponibles </label>
+    <div class="custom-select">
+        <select  name="languageSubtitulos[]" multiple class="custom-multiple-select">
+          <?php foreach ($languages as $language): ?>
+              <option value="<?= $language->getId(); ?>">
+                <?= $language->getName(); ?>
+              </option>
+          <?php endforeach; ?>
+        </select>
+    </div>
   </p>
 
   <p class="form-group">

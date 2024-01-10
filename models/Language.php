@@ -90,4 +90,44 @@ class Language
         return $language->fetch_object();
     }
 
+
+    function convertToLanguage(Object $a):Language{
+        $language=new Language();
+        $language->setId($a->id);
+        $language->setName($a->name);
+        $language->setIsoCode($a->ISO_code);       
+        return $language;
+    
+    }
+    public function findAllLanguages() : ArrayObject
+    {
+        $allLanguages=new ArrayObject();
+        $all= $this->db->query("SELECT * FROM language");
+        $language=new Language();
+        while ($a=$all->fetch_object()):
+            $language= $language->convertToLanguage($a);
+            $allLanguages->append($language);
+        endwhile;
+        return $allLanguages;
+    }
+
+    public function findLanguage(string $i):Language
+    {
+        $language=new Language();
+        $a = $this->db->query("SELECT * FROM language WHERE id = {$i}");
+        $a=$a->fetch_object();
+        $language=$language->convertToLanguage($a);
+    
+        return $language;
+    }
+
+    public function printLanguages(ArrayObject $a): String{
+        $i=0;
+        $lista= [];
+        for($i=0;$i<$a->count();$i++){
+         array_push($lista, $a->offsetGet($i)->getName().' '.$a->offsetGet($i)->getIsoCode()) ;
+        }
+        return implode(', ', $lista);
+     }
+
 }

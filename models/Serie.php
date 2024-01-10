@@ -8,6 +8,7 @@ class Serie
     private Director $director;
     private ArrayObject $actors;
     private ArrayObject $languages;
+    private ArrayObject $languagesSubtitulos;
     
 
     public function __construct()
@@ -17,6 +18,7 @@ class Serie
         $this->director=new Director();
         $this->actors=new ArrayObject();
         $this->languages=new ArrayObject();
+        $this->languagesSubtitulos=new ArrayObject();
     }
 
     public function getId(): string
@@ -79,6 +81,31 @@ class Serie
     {
         $this->actors=$a;
     }
+
+    public function getLanguages(): ArrayObject
+    {
+        return $this->languages;
+    }
+    public function setLanguages(ArrayObject $a): void
+    {
+        $this->languages=$a;
+    }
+
+
+
+    public function getLanguagesSubtitulos(): ArrayObject
+    {
+        return $this->languagesSubtitulos;
+    }
+    public function setLanguagesSubtitulos(ArrayObject $a): void
+    {
+        $this->languagesSubtitulos=$a;
+    }
+
+    
+   
+
+
     public function getDirector(): Director
     {
         return $this->director;
@@ -105,7 +132,47 @@ class Serie
         
        
     }
+
+    public function addLanguage(Language $a){
+        $this->languages->append($a);
+    }
+
+    public function addLanguagesAudio(Array $a){
+        $i=0;
+        $index_language='';
+        $language=new Language();
+
+        for($i=0;$i<count($a);$i++){
+            $index_language=$a[$i];
+            $language=$language->findLanguage($index_language);
+            $this->addLanguage($language);
+        }
+        
+       
+    }
     
+
+
+    public function addLanguageSubtitulo(Language $a){
+        $this->languagesSubtitulos->append($a);
+    }
+
+    public function addLanguagesSubtitulos(Array $a){
+        $i=0;
+        $index_language='';
+        $language=new Language();
+
+        for($i=0;$i<count($a);$i++){
+            $index_language=$a[$i];
+            $language=$language->findLanguage($index_language);
+            $this->addLanguageSubtitulo($language);
+        }
+        
+       
+    }
+   
+
+
     public function findSerieIdByName(string $name): string
     {
         $sql = "SELECT * FROM serie WHERE title in ('{$name}')";
@@ -173,6 +240,8 @@ class Serie
         $p=$p->findPlatform($s->platform_id);
         $serie->setPlatform($p);
         $serie->setActors($serie->findActorsOfSerie($s->id));
+        $serie->setLanguages($serie->findLanguagesOfSerie($s->id));
+        $serie->setLanguagesSubtitulos($serie->findLanguagesSubtitulosOfSerie($s->id));
         $serie->setDirector($serie->findDirectorOfSerie($s->id));
         return $serie;
     
@@ -211,6 +280,86 @@ class Serie
         return $actorsList;
     }
 
+    public function findLanguagesOfSerie(string $id): ArrayObject{
+        $languagesList=new ArrayObject();
+        $i=0;
+        $languages=$this->db->query("SELECT * FROM audio_languages WHERE serie_id = {$id}");
+        while($language=$languages->fetch_object()):
+            $a=$this->db->query("SELECT * FROM language WHERE id = {$language->language_id}");
+            $language=new Language();
+            $a=$a->fetch_object();
+            $language=$language->convertToLanguage($a);
+            $languagesList->append($language);
+        endwhile;
+        return $languagesList;
+    }
+
+
+
+    public function findLanguagesSubtitulosOfSerie(string $id): ArrayObject{
+        $languagesList=new ArrayObject();
+        $i=0;
+        $languages=$this->db->query("SELECT * FROM subtitles_languages WHERE serie_id = {$id}");
+        while($language=$languages->fetch_object()):
+            $a=$this->db->query("SELECT * FROM language WHERE id = {$language->language_id}");
+            $language=new Language();
+            $a=$a->fetch_object();
+            $language=$language->convertToLanguage($a);
+            $languagesList->append($language);
+        endwhile;
+        return $languagesList;
+    }
+
+
+    public function saveLanguageAudio(): bool
+    {
+       $i=0;
+       $languagesList=$this->getLanguages();
+       $languages_audios =new ArrayObject();
+       
+        for($i=0;$i<$languagesList->count();$i++){
+            $sql = "INSERT INTO audio_languages VALUES('{$this->getId()}','{$this->languages->offsetGet($i)->getId()}')";
+            echo $sql;
+            $languages_audios->append( $this->db->query($sql));
+        }
+        $i=0;
+        while($i<$languages_audios->count()):
+            $languages_audio= $languages_audios->offsetGet($i);
+            if(!$languages_audio) {
+                return false;
+        }
+        $i++;;
+        endwhile;
+        return true;
+   
+    }  
+
+
+
+    public function saveLanguageSubtitulo(): bool
+    {
+       $i=0;
+       $languagesList=$this->getLanguagesSubtitulos();
+       $languages_subtitulos =new ArrayObject();
+       
+        for($i=0;$i<$languagesList->count();$i++){
+            $sql = "INSERT INTO subtitles_languages VALUES('{$this->getId()}','{$this->languagesSubtitulos->offsetGet($i)->getId()}')";
+            echo $sql;
+            $languages_subtitulos->append( $this->db->query($sql));
+        }
+        $i=0;
+        while($i<$languages_subtitulos->count()):
+            $languages_subtitulo= $languages_subtitulos->offsetGet($i);
+            if(!$languages_subtitulo) {
+                return false;
+        }
+        $i++;;
+        endwhile;
+        return true;
+   
+    }  
+
+
     public function savePerformance(): bool
     {
        $i=0;
@@ -233,6 +382,9 @@ class Serie
         return true;
    
     }  
+
+
+
     public function saveDirect(): bool
     {
         $sql = "INSERT INTO direccion VALUES( '{$this->director->getId()}', '{$this->getId()}')";
