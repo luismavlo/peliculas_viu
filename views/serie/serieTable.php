@@ -5,6 +5,8 @@
         <th>Nombre</th>
         <th>Plataformas <br> Disponibles </th>
         <th>Reviews </th>
+        <th>Idioma Audios disponibles </th>
+        <th>Idioma Subtitulos disponibles </th>
         <th>Actores </th>
         <th>Director </th>
         <th>Acciones</th>
@@ -15,6 +17,8 @@
           <td><?= $serie->getName(); ?></td>
           <td><?= $serie->getPlatform()->getName(); ?></td>
           <td><?= $serie->getReview(); ?></td>
+          <td><?= SerieController::findLanguagesInSerie($serie); ?></td>
+          <td><?= SerieController::findLanguagesSubtitulosInSerie($serie); ?></td>
           <td><?= SerieController::findActorsInSerie($serie); ?></td>
           <td><?= $serie->getDirector()->getName() . ' ' . $serie->getDirector()->getsurname(); ?></td>
           <td>

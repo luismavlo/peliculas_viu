@@ -10,7 +10,7 @@
 
     <?php Util::deleteSession('create_platform') ?>
 
-    <?= require_once 'createPlatformForm.php';?>
+    <?php require_once 'createPlatformForm.php';?>
 
     <?php if(!isset($edit)): ?>
         <?php if(isset($_SESSION['delete_platform']) && $_SESSION['delete_platform'] == 'completed' ): ?>
@@ -22,7 +22,7 @@
         <?php Util::deleteSession('delete_platform') ?>
 
 
-        <?= require_once 'platformTable.php';?>
+        <?php require_once 'platformTable.php';?>
     <?php endif; ?>
 
 

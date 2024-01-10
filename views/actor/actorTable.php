@@ -14,7 +14,7 @@
     <td><?= $actor->id; ?></td>
     <td><?= $actor->name; ?></td>
     <td><?= $actor->surname; ?></td>
-    <td><?= $actor->birthdate; ?></td>
+    <td><?= date_format(date_create($actor->birthdate),"d/m/Y"); ?></td>
     <td><?= $actor->nationality; ?></td>
     <td>
     <a class="button-dashboard-danger" href="<?=base_url?>Actor/delete&id=<?=$actor->id;?>"> Eliminar </a>
