@@ -3,6 +3,8 @@ class Serie
 {
     private readonly string $id;
     private readonly string $name;
+
+    private readonly string $serieImg;
     private Platform $platform;
     private readonly string $review;
     private Director $director;
@@ -102,8 +104,16 @@ class Serie
         $this->languagesSubtitulos=$a;
     }
 
-    
-   
+    public function getSerieImg(): string
+    {
+      return $this->serieImg;
+    }
+
+    public function setSerieImg(string $serieImgUrl)
+    {
+      $this->serieImg = $serieImgUrl;
+    }
+
 
 
     public function getDirector(): Director
@@ -183,7 +193,7 @@ class Serie
     }
     public function save(): string
     {
-        $sql = "INSERT INTO serie VALUES(NULL, '{$this->getName()}', '{$this->getPlatform()->getId()}' , '{$this->getReview()}')";
+        $sql = "INSERT INTO serie VALUES(NULL, '{$this->getName()}','{$this->getSerieImg()}','{$this->getPlatform()->getId()}' , '{$this->getReview()}')";
        
         $serie = $this->db->query($sql);
         $id=0;
@@ -235,6 +245,7 @@ class Serie
         $serie=new Serie();
         $serie->setId($s->id);
         $serie->setName($s->title);
+        $serie->setSerieImg($s->serie_img);
         $serie->setReview($s->review);
         $p=$serie->getPlatform();
         $p=$p->findPlatform($s->platform_id);

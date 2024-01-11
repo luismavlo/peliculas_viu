@@ -93,6 +93,22 @@ class Platform
         return $allPlatforms;
     }
 
+    public function findAllPlatformWithCountSeries()
+    {
+      $query = "SELECT a.*, COUNT(b.id) AS total_serie FROM platform a LEFT JOIN serie b ON a.id = b.platform_id GROUP BY a.id;";
+      $result = $this->db->query($query);
+
+
+      if ($result) {
+        $platforms = $result->fetch_all(MYSQLI_ASSOC);
+        $result->free();
+
+        return $platforms;
+      } else {
+        return [];
+      }
+    }
+
     function convertToPlatform(Object $p):Platform
     {
         $platform=new Platform();

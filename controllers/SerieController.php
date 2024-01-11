@@ -35,6 +35,7 @@ class SerieController {
 
 
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+        $serieImg = isset($_POST['serieImg']) ? trim($_POST['serieImg']) : '';
         $platformId = isset($_POST['platform']) ? trim($_POST['platform']) : '';
         $review = isset($_POST['review'])  ? ($_POST['review']): '' ;
         $languageIds = isset($_POST['languageAudios'])  ? ($_POST['languageAudios']): '' ;
@@ -52,11 +53,12 @@ class SerieController {
 
         $serie->setName($name);
         $serie->setReview($review);
+        $serie->setSerieImg($serieImg);
 
         $serie->setId($_GET['id']);
         $save = $serie->update();
       }else {
-        if (empty($name) || empty($review)|| empty($platformId) || empty($directorId) || count($actorIds) == 0 || count($languageIds) == 0 || count($languageSubtitulosIds) == 0 ) {
+        if (empty($name) || empty($serieImg) || empty($review)|| empty($platformId) || empty($directorId) || count($actorIds) == 0 || count($languageIds) == 0 || count($languageSubtitulosIds) == 0 ) {
           $_SESSION['create_serie'] = "failed";
           return;
         }
@@ -79,6 +81,7 @@ class SerieController {
         $serie->setName($name);
         $serie->setPlatformId($platformId);
         $serie->setReview($review);
+        $serie->setSerieImg($serieImg);
 
         $director= new Director();
 

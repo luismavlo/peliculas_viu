@@ -17,6 +17,14 @@ $found = isset($serieFoundIt) && is_object($serieFoundIt);
       ? $serieFoundIt->getName()
       : "" ?>" />
   </p>
+    <p class="form-group">
+        <label for="serieImg">Imagen URL </label>
+        <input type="text" name="serieImg" required class="form-input" placeholder="Ingrese la url de la imagen de la serie" value="<?= isset(
+          $serieFoundIt
+        ) && is_object($serieFoundIt)
+          ? $serieFoundIt->getName()
+          : "" ?>" />
+    </p>
     <?php if(!isset($edit)):  ?>
     <p class="form-group">
         <label for="platform">Plataforma </label>

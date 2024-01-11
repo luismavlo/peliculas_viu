@@ -495,3 +495,8 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+.logo-img-table {
+    width: 100px;
+    height: 100px;
+}

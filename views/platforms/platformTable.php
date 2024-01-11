@@ -9,7 +9,7 @@
 
   <?php foreach ($platforms as $platform): ?>
       <tr class="table-body">
-          <td><?= $platform->getImage(); ?></td>
+          <td><img class="logo-img-table" src="<?= $platform->getImage(); ?>"></td>
           <td><?= $platform->getName(); ?></td>
           <td>
               <a class="button-dashboard-danger" href="<?= base_url ?>Platform/delete&id=<?= $platform->getId(); ?>"> Eliminar </a>
