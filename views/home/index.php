@@ -20,13 +20,13 @@
           foreach ($ultimasDosSeries as $serie):
             ?>
               <article class="hero_card">
-                  <img src="<?= $serie->getSerieImg(); ?>" alt="imagen de la tarjeta">
+                 <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none"> <img src="<?= $serie->getSerieImg(); ?>" alt="imagen de la tarjeta" width="25%"></a>
                   <div>
                       <h2><?= $serie->getName(); ?></h2>
                       <p><?= $serie->getReview(); ?></p>
                       <button class="button-primary" disabled>
                           <i class="fa-solid fa-play"></i>
-                          Ver más
+                          <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none">Ver más</a>
                       </button>
                   </div>
               </article>
@@ -52,14 +52,14 @@
         <section class="series__content">
             <?php foreach ($series as $serie): ?>
                 <article class="series__card">
-                    <img src="<?=$serie->getSerieImg()?>" alt="imagen de una serie">
+                <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none"><img src="<?=$serie->getSerieImg()?>" alt="imagen de una serie"></a>
                     <div>
                         <h2><?= $serie->getName(); ?></h2>
                         <p><span>Audio:</span> <?= SerieController::findLanguagesInSerie($serie); ?> </p>
                         <p><span>Subtitulos:</span> <?=SerieController::findLanguagesSubtitulosInSerie($serie);  ?></p>
                         <button class="button-primary">
                             <i class="fa-solid fa-play"></i>
-                            Ver más
+                            <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none">Ver más</a>
                         </button>
                     </div>
                 </article>

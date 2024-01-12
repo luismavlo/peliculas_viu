@@ -271,7 +271,7 @@ class Serie
         $serie=$serie->convertToSerie($s);
         $actorsList=$serie->findActorsOfSerie($id);
         $serie->setActors($actorsList);
-        $serie->findDirectorOfSerie($id);
+        $director=$serie->findDirectorOfSerie($id);
         $serie->setDirector($director);
          
         return $serie;
