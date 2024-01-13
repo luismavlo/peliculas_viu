@@ -38,13 +38,17 @@
     </section>
     <section class="platforms">
         <?php foreach ($platforms as $platform): ?>
+            
             <article class="platforms__card">
+            <a href="<?= base_url ?>Home/seriesByPlatform&id=<?= $platform['id']; ?>" style="text-decoration:none; color: white">
                 <img src="<?=$platform['image']?>" alt="logo plataforma">
                 <div>
                     <h3><?= isset($platform['name']) ? $platform['name'] : 'Nombre no disponible'; ?></h3>
                     <p><?= isset($platform['total_serie']) ? $platform['total_serie'] : '0'; ?>+ Series</p>
                 </div>
+                </a> 
             </article>
+            
         <?php endforeach; ?>
     </section>
     <section class="series">
@@ -52,26 +56,14 @@
         <section class="series__content">
             <?php foreach ($series as $serie): ?>
                 <article class="series__card">
-                <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none"><img src="<?=$serie->getSerieImg()?>" alt="imagen de una serie"></a>
+                <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none; color: white"><img src="<?=$serie->getSerieImg()?>" alt="imagen de una serie"></a>
                     <div>
                         <h2><?= $serie->getName(); ?></h2>
-                        <p><span>Audio:</span> 
-                            <?php if(strlen(SerieController::findLanguagesInSerie($serie)) > 0): ?>
-                                <?= SerieController::findLanguagesInSerie($serie) ?>
-                            <?php else: ?>
-                                No disponible
-                            <?php endif; ?>
-                        </p>
-                        <p><span>Subtitulos:</span>
-                        <?php if(strlen(SerieController::findLanguagesSubtitulosInSerie($serie)) > 0): ?>
-                                <?= SerieController::findLanguagesSubtitulosInSerie($serie) ?>
-                            <?php else: ?>
-                                No disponible
-                            <?php endif; ?>
-                       </p>
+                        <p><span>Audio:</span> <?= SerieController::findLanguagesInSerie($serie); ?> </p>
+                        <p><span>Subtitulos:</span> <?=SerieController::findLanguagesSubtitulosInSerie($serie);  ?></p>
                         <button class="button-primary">
                             <i class="fa-solid fa-play"></i>
-                            <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none; color: white">Ver más</a>
+                            <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none">Ver más</a>
                         </button>
                     </div>
                 </article>
