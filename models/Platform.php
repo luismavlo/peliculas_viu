@@ -128,4 +128,19 @@ class Platform
         return $platform;
     }
 
+    public function findSeriesId(string $idPlatform):ArrayObject
+    {
+        $idSeriesList=new ArrayObject();
+        $serie=new Serie();
+        $s = $this->db->query("SELECT s.*  FROM serie s  where s.platform_id=$idPlatform");
+        
+        
+        while($serie=$s->fetch_object()):  
+            $idSeriesList->append($serie->id);
+        endwhile;
+        
+        return $idSeriesList;
+
+    }
+
 }

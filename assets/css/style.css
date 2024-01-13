@@ -275,7 +275,7 @@ a:link, a:visited, a:active {
     transform: scale(1.1) rotate(10deg);
 }
 
-.platforms__card img {
+.platforms__card img  {
     width: 50%;
     border-radius:1rem;
 }
