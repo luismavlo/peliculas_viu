@@ -15,7 +15,13 @@
         <label for="isoCode">ISO CODE </label>
         <input type="text" name="isoCode" required class="form-input" placeholder="Ingrese el ISO CODE" value="<?= isset($languageFoundIt) && is_object($languageFoundIt) ? $languageFoundIt->ISO_code : ''; ?>" />
     </p>
-    <p>
-        <input type="submit" value="Crear Idioma" class="button-dashboard-primary">
-    </p>
+    <?php if(isset($edit)): ?>
+        <p>
+            <input type="submit" value="Editar idioma" class="button-dashboard-primary">
+        </p>
+    <?php else: ?>
+        <p>
+            <input type="submit" value="Crear idioma" class="button-dashboard-primary">
+        </p>
+    <?php endif; ?>
 </form>

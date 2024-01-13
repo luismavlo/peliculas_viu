@@ -51,6 +51,7 @@ class Database {
                 name varchar(255) NOT NULL,
                 image varchar(255) NOT NULL,
                 UNIQUE (id)
+
             )");
 
             $db->query("
@@ -87,13 +88,7 @@ class Database {
                 PRIMARY KEY (director_id, serie_id)
             )");
 
-            $db->query("
-            CREATE TABLE IF NOT EXISTS available_in (
-                serie_id INT NOT NULL ,
-                platform_id INT NOT NULL ,
-                PRIMARY KEY (serie_id, platform_id)
-            )");
-
+       
             $db->query("
             CREATE TABLE IF NOT EXISTS audio_languages (
                 serie_id INT NOT NULL ,
@@ -108,16 +103,9 @@ class Database {
                 PRIMARY KEY (serie_id, language_id)
             )");
 
-            // Añadir restricciones de clave externa
             $db->query("
-            ALTER TABLE available_in
+            ALTER TABLE serie
                 ADD FOREIGN KEY (platform_id) REFERENCES platform (id)
-                    ON UPDATE CASCADE
-                    ON DELETE CASCADE");
-
-            $db->query("
-            ALTER TABLE available_in
-                ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
                     ON UPDATE CASCADE
                     ON DELETE CASCADE");
 
@@ -137,13 +125,13 @@ class Database {
             ALTER TABLE direccion
                 ADD FOREIGN KEY (serie_id) REFERENCES serie (id)
                     ON UPDATE CASCADE
-                    ON DELETE CASCADE");
+                    ON DELETE RESTRICT");
 
             $db->query("
             ALTER TABLE direccion
                 ADD FOREIGN KEY (director_id) REFERENCES director (id)
                     ON UPDATE CASCADE
-                    ON DELETE CASCADE");
+                    ON DELETE RESTRICT");
 
             $db->query("
             ALTER TABLE audio_languages
@@ -178,6 +166,15 @@ class Database {
                 ('Italian', 'it'),
                 ('Japanese', 'ja')");
 
+  // Insertar datos en la tabla platform
+            $db->query("
+                INSERT INTO platform (name, image) VALUES
+                ('Netflix', 'https://i.pcmag.com/imagery/reviews/05cItXL96l4LE9n02WfDR0h-5.fit_scale.size_760x427.v1582751026.png'),
+                ('Hulu', 'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2020/12/hulu-logo-2167439.jpg'),
+                ('Prime video', 'https://zonasyc.com/wp-content/uploads/2023/09/amazon-prime-video-identidad-1200x670-1.webp'),
+                ('Disney+', 'https://www.internetmatters.org/wp-content/uploads/2020/04/disney-plus-logo-1143358.jpeg'),
+                ('BBC', 'https://ichef.bbci.co.uk/images/ic/1920x1080/p09xtmrp.jpg')");
+
             // Insertar datos en la tabla serie
             $db->query("
                 INSERT INTO serie (title, serie_img ,platform_id, review) VALUES
@@ -189,14 +186,7 @@ class Database {
                 ('Peaky Blinders', 'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2022/01/peaky-blinders-2591523.jpg?tf=3840x', 2, 'Crime drama')",
             );
 
-            // Insertar datos en la tabla platform
-            $db->query("
-                INSERT INTO platform (name, image) VALUES
-                ('Netflix', 'https://i.pcmag.com/imagery/reviews/05cItXL96l4LE9n02WfDR0h-5.fit_scale.size_760x427.v1582751026.png'),
-                ('Hulu', 'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2020/12/hulu-logo-2167439.jpg'),
-                ('Prime video', 'https://zonasyc.com/wp-content/uploads/2023/09/amazon-prime-video-identidad-1200x670-1.webp'),
-                ('Disney+', 'https://www.internetmatters.org/wp-content/uploads/2020/04/disney-plus-logo-1143358.jpeg'),
-                ('BBC', 'https://ichef.bbci.co.uk/images/ic/1920x1080/p09xtmrp.jpg')");
+          
 
             // Insertar datos en la tabla director
             $db->query("
@@ -238,15 +228,7 @@ class Database {
                 (5, 5),
                 (6, 6)");
 
-            // Insertar datos en la tabla available_in
-            $db->query("
-                INSERT INTO available_in (serie_id, platform_id) VALUES
-                (1, 1),
-                (2, 2),
-                (3, 3),
-                (4, 1),
-                (5, 1),
-                (6, 2)");
+       
 
             // Insertar datos en la tabla audio_languages
             $db->query("

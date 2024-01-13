@@ -17,7 +17,7 @@
     <td><?= date_format(date_create($director->birthdate),"d/m/Y"); ?></td>
     <td><?= $director->nationality; ?></td>
     <td>
-    <a class="button-dashboard-danger" href="<?=base_url?>Director/delete&id=<?=$director->id;?>"> Eliminar </a>
+
     <a class="button-dashboard-secondary" href="<?=base_url?>Director/update&id=<?=$director->id;?>"> Actualizar </a>
     </td>
   </tr>

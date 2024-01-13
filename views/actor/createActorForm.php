@@ -23,7 +23,14 @@
         <label for="nationality">Nacionalidad</label>
         <input type="text" name="nationality" required class="form-input" placeholder="Ingrese la nacionalidad del actor" value="<?= isset($actorFoundIt) && is_object($actorFoundIt) ? $actorFoundIt->nationality : ''; ?>"/>
     </p>
-    <p>
-        <input type="submit" value="Crear Actor" class="button-dashboard-primary">
-    </p>
+    <?php if(isset($edit)): ?>
+        <p>
+            <input type="submit" value="Editar Actor" class="button-dashboard-primary">
+        </p>
+    <?php else: ?>
+        <p>
+            <input type="submit" value="Crear Actor" class="button-dashboard-primary">
+        </p>
+    <?php endif; ?>
+    
 </form>

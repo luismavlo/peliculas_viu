@@ -24,7 +24,13 @@
         <label for="nationality">Nacionalidad</label>
         <input type="text" name="nationality" required class="form-input" placeholder="Ingrese la nacionalidad del director" value="<?= isset($directorFoundIt) && is_object($directorFoundIt) ? $directorFoundIt->nationality : ''; ?>"/>
     </p>
-    <p>
-        <input type="submit" value="Crear Director" class="button-dashboard-primary">
-    </p>
+    <?php if(isset($edit)): ?>
+        <p>
+            <input type="submit" value="Editar Director" class="button-dashboard-primary">
+        </p>
+    <?php else: ?>
+        <p>
+            <input type="submit" value="Crear Director" class="button-dashboard-primary">
+        </p>
+    <?php endif; ?>
 </form>
