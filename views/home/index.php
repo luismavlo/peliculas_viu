@@ -26,7 +26,7 @@
                       <p><?= $serie->getReview(); ?></p>
                       <button class="button-primary" disabled>
                           <i class="fa-solid fa-play"></i>
-                          <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none">Ver más</a>
+                          <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none; color: white">Ver más</a>
                       </button>
                   </div>
               </article>
@@ -59,7 +59,7 @@
                         <p><span>Subtitulos:</span> <?=SerieController::findLanguagesSubtitulosInSerie($serie);  ?></p>
                         <button class="button-primary">
                             <i class="fa-solid fa-play"></i>
-                            <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none">Ver más</a>
+                            <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none; color: white">Ver más</a>
                         </button>
                     </div>
                 </article>

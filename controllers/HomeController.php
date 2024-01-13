@@ -28,7 +28,7 @@ class HomeController
             echo  $_SESSION['find_serie'];
             header('Location:'.base_url.'Serie/index');
         }
-
+#181818
         $edit = true;
         $serieId = $_GET['id'];
 

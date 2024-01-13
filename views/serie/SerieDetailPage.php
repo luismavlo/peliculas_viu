@@ -10,51 +10,42 @@
 <body>
 
 
-<main class="container container_dash">
-    <div class="container_dash ">
-    <span class="serie-img">
-        <img src="<?= $serieFoundIt->getSerieImg(); ?>" alt="imagen de la serie" width="50%" >
-</span>
-<span class="serie-info">
-       
-        <span>
-            <h2>Título: </h2><?=$serieFoundIt->getName();?>
-        </span>
-
-
-    <span>
-        <h2>Review: </h2><?=$serieFoundIt->getReview();?>
-    </span>
-    <span>
-       <h2> Director: </h2><?=$serieFoundIt->getDirector()->getName() ." ".$serieFoundIt->getDirector()->getSurname() ;?>
-    </span>
-    <span>
-       
-            <h2>Actores: </h2>
-                <?php foreach ($serieFoundIt->getActors() as $a ) : ?>
-                   <?= $a->getName() ." ". $a->getSurname();?>
-                <?php endforeach; ?>
-       
-    </span>
-    <span>
-        <h2>Plataforma: </h2><?=$serieFoundIt->getPlatform()->getName();?>
-    </span>
-    <span>
-                  
-        <h2>Idiomas: </h2>
-            <?php foreach ($serieFoundIt->getLanguages() as $l ) : ?>
-                 <?= $l->getName();?>
-             <?php endforeach; ?>
-    
-    </span>
-    <span>
-    <h2>Subtitulos: </h2>
-        <?php foreach ($serieFoundIt->getLanguagesSubtitulos() as $l ) : ?>
-            <?= $l->getName();?>
-        <?php endforeach; ?>
-        
-    </span>
-       
-</span>
-</div>
+<main class="container center-element">
+    <div class="serie-details">
+        <div class="serie-img">
+            <img src="<?= $serieFoundIt->getSerieImg(); ?>" alt="imagen de la serie">
+        </div>
+        <div class="info-container">
+                <span>
+                    <h2>Título: </h2><?=$serieFoundIt->getName();?>
+                </span>
+            <span>
+                    <h2>Review: </h2><?=$serieFoundIt->getReview();?>
+                </span>
+            <span>
+                    <h2> Director: </h2><?=$serieFoundIt->getDirector()->getName() ." ".$serieFoundIt->getDirector()->getSurname() ;?>
+                </span>
+            <span>
+                    <h2>Actores: </h2>
+                    <?php foreach ($serieFoundIt->getActors() as $a ) : ?>
+                      <?= $a->getName() ." ". $a->getSurname();?>
+                    <?php endforeach; ?>
+                </span>
+            <span>
+                    <h2>Plataforma: </h2><?=$serieFoundIt->getPlatform()->getName();?>
+                </span>
+            <span>
+                    <h2>Idiomas: </h2>
+                    <?php foreach ($serieFoundIt->getLanguages() as $l ) : ?>
+                      <?= $l->getName();?>
+                    <?php endforeach; ?>
+                </span>
+            <span>
+                    <h2>Subtítulos: </h2>
+                    <?php foreach ($serieFoundIt->getLanguagesSubtitulos() as $l ) : ?>
+                      <?= $l->getName();?>
+                    <?php endforeach; ?>
+                </span>
+        </div>
+    </div>
 </main>
