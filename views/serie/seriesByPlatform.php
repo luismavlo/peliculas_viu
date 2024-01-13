@@ -13,7 +13,7 @@
 <main class="container center-element">
     <div class="platform-details">
         <div class="platform-img">
-        <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none; color: white"><img src="<?= $platformFoundIt->getImage(); ?>" alt="imagen de la plataforma"></a>
+        <img src="<?= $platformFoundIt->getImage(); ?>" alt="imagen de la plataforma">
         <section class="series">    
         <h2>Series de la Plataforma <?= $platformFoundIt->getName(); ?> :</h2>
            
@@ -23,7 +23,7 @@
             foreach($seriesList as $serie): ?>
              <article class="series__card">
                 <h2> <?=$serie->getName();?></h2><br>
-                <img src="<?=$serie->getSerieImg();?>" alt="imagen de la serie">
+                <a href="<?= base_url ?>Home/serieDetail&id=<?= $serie->getId(); ?>" style="text-decoration:none; color: white"><img src="<?=$serie->getSerieImg();?>" alt="imagen de la serie"></a>
             </article>
            <?php endforeach;        ?>
             </section>
