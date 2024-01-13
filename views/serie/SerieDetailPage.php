@@ -20,7 +20,10 @@
                     <h2>Título: </h2><?=$serieFoundIt->getName();?>
                 </span>
             <span>
-                    <h2>Review: </h2><?=$serieFoundIt->getReview();?>
+                    <h2>Subtítulos: </h2>
+                    <?php foreach ($serieFoundIt->getLanguagesSubtitulos() as $l ) : ?>
+                      <?= $l->getName();?>
+                    <?php endforeach; ?>
                 </span>
             <span>
                     <h2> Director: </h2><?=$serieFoundIt->getDirector()->getName() ." ".$serieFoundIt->getDirector()->getSurname() ;?>
@@ -40,11 +43,9 @@
                       <?= $l->getName();?>
                     <?php endforeach; ?>
                 </span>
+
             <span>
-                    <h2>Subtítulos: </h2>
-                    <?php foreach ($serieFoundIt->getLanguagesSubtitulos() as $l ) : ?>
-                      <?= $l->getName();?>
-                    <?php endforeach; ?>
+                    <h2>Review: </h2><?=$serieFoundIt->getReview();?>
                 </span>
         </div>
     </div>
