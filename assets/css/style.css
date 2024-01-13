@@ -7,6 +7,7 @@
     box-sizing: inherit;
 }
 
+
 html {
     font-size: 62.5%; /* 1rem = 10px; 10px/16px = 62.5% */
 
@@ -40,6 +41,9 @@ body {
         padding: 0;
     }
 }
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
 
 .text-success {
     font-size: 2rem;
@@ -55,6 +59,24 @@ body {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
+.serie-info{
+   
+  
+}  
+
+.serie-img{
+    width:100%; 
+}
+.serie-img>img{
+  
+   align-items: right;
+}
+.serie-detail{
+
+}
+.container_dash  .serie-img  img{
+   border-radius:1rem;
+}
 
 .container_dash {
     background-color: white;
@@ -64,7 +86,6 @@ body {
     height: 100%;
     padding: 2.5% 5% 2.5% 5%;
 }
-
 
 .nav {
     display: flex;
@@ -166,17 +187,32 @@ body {
     background-color: #120120;
     color: white;
 }
+.hero_card >a{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    height: 23rem;
+    padding: 5px;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: #120120;
+    color: white;
+}
 
 .hero_card img {
     border-radius: 1rem;
-    width: 50%;
+    width:100%;
 }
+
 
 .hero_card div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     overflow: hidden;
+}
+.hero_card > a{
+    width:50%;
 }
 
 
@@ -202,6 +238,7 @@ body {
     color: white;
     width: 10rem;
     transition: all 300ms;
+    text-decoration: none;
 }
 
 .button-primary:hover {
@@ -238,9 +275,10 @@ body {
 
 .platforms__card img {
     width: 50%;
+    border-radius:1rem;
 }
 
-.platforms__card > div  {
+.platforms__card  div  {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -248,12 +286,12 @@ body {
     align-items: center;
 }
 
-.platforms__card > div > h3 {
+.platforms__card  div  h3 {
     font-size: 2.2rem;
     color: #fff;
 }
 
-.platforms__card > div > p {
+.platforms__card  div  p {
     font-size: 1.8rem;
     color: #fff;
     font-weight: 100;
@@ -286,18 +324,29 @@ body {
     flex-direction: column;
     justify-content: start;
 }
+.series__card >a{
+    padding: 1rem;
+    width: 38rem;
+    overflow: hidden;
+    height: 38rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
 
-.series__card > img {
+.series__card img {
     width: 100%;
     min-height: 22rem;
     border-radius: 1rem;
     transition: transform 0.3s ease-in-out;
 }
 
-.series__card > img:hover {
+
+.series__card   img:hover {
     transform: scale(1.1);
 }
-.series__card > div {
+.series__card  div {
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -307,17 +356,17 @@ body {
 }
 
 
-.series__card > div > h2 {
+.series__card  div  h2 {
     font-size: 3rem;
     margin-bottom: 0.5rem;
 }
 
-.series__card > div > p {
+.series__card div  p {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
-.series__card > div > p > span{
+.series__card  div  p  span{
     font-weight: bold;
 }
 

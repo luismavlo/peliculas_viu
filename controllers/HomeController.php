@@ -2,7 +2,6 @@
 require_once __DIR__ .'/../models/Platform.php';
 require_once __DIR__ . '/../models/Director.php';
 require_once __DIR__ .'/../models/Serie.php';
-require_once __DIR__ . '/../models/Serie.php';
 require_once __DIR__ . '/../models/Actor.php';
 require_once __DIR__ . '/../models/Language.php';
 
@@ -22,6 +21,25 @@ class HomeController
         require_once 'views/home/index.php';
     }
 
+    public function serieDetail(){
+       
+        if(!isset($_GET['id'])){
+            $_SESSION['find_serie'] = 'failed';
+            echo  $_SESSION['find_serie'];
+            header('Location:'.base_url.'Serie/index');
+        }
+
+        $edit = true;
+        $serieId = $_GET['id'];
+
+        $serie = new Serie();
+        $serie->setId($serieId);
+;
+
+        $serieFoundIt = $serie->findSerie($serieId);
+         
+        require_once 'views/serie/serieDetailPage.php';
+    }
     public function load_database()
     {
         Database::load_db();
